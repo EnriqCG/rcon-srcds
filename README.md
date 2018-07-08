@@ -3,7 +3,7 @@
 
 ## Install
 ```console
-npm install node-srcds-rcon --save
+npm install rcon-srcds --save
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ Remember you can't send a packet larger then 4096 bytes: https://developer.valve
 
 ## Example
 ```javascript
-const rcon = require('node-srcds-rcon');
+const rcon = require('rcon-srcds');
 const server = new Rcon({ port: 1337 });
 
 server.authenticate('yourawesomepassword')
