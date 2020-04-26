@@ -1,6 +1,6 @@
 {
   "name": "rcon-srcds",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A modern NodeJS library for the Source RCON Protocol",
   "main": "index.js",
   "scripts": {
@@ -12,11 +12,15 @@
   },
   "keywords": [
     "rcon",
-    "rcon-protocol",
+    "rcon protocol",
     "rcon-client",
-    "csgo"
+    "csgo",
+    "minecraft rcon"
   ],
-  "author": "Enrique Carpintero, coding@enriqcg.io",
+  "author": "Enrique Carpintero <coding@enriqcg.io>",
+  "contributors": [
+    "Markus Adrario (https://github.com/Taraman17)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/EnriqCG/rcon-srcds/issues"
