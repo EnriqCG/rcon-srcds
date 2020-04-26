@@ -26,16 +26,19 @@ These are the default values.
 
 *The maximum possible value of packet size is **4096** bytes*: https://developer.valvesoftware.com/wiki/Source_RCON_Protocol#Packet_Size
 
+## Minecraft Compatibility
+Although the package name implies exclusive compatibility with Source games, Minecraft servers also use Valve's RCON implementation, so there should not be any issues using this package for your Minecraft projects!
+
 ## Examples
 Using async/await:
 ```javascript
 const Rcon = require('rcon-srcds');
-const server = new Rcon({ host: "127.0.0.1", port: 25010 });
+const server = new Rcon({ host: '127.0.0.1', port: 25010 });
 try {
     await server.authenticate('your_rcon_password');
-    console.log("Authenticated");
-    let status = await server.execute("status"); // You can read `status` reponse
-    server.execute("mp_autokick 0"); // no need to read the response
+    console.log('authenticated');
+    let status = await server.execute('status'); // You can read `status` reponse
+    server.execute('mp_autokick 0'); // no need to read the response
 } catch(e) {
     console.error(e);
 }
@@ -47,7 +50,7 @@ const server = new Rcon({ port: 25010 });
 
 server.authenticate('rcon_password')
     .then(() => {
-        console.log('Authenticated');
+        console.log('authenticated');
         return server.execute('status');
     })
     .then(console.log)
