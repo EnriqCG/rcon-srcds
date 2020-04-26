@@ -87,7 +87,7 @@ class SourceRCON {
             // Send a authentication packet (0x02)
             this.write(Protocol.SERVERDATA_AUTH, Protocol.ID_AUTH, password)
                 .then((data) => {
-                    if (data.id === Protocol.ID_AUTH) { // Request ID !== -1 mean success!
+                    if (data === 'success') { // Request ID !== -1 mean success!
                         this.authenticated = true;
                         resolve();
                     } else {
@@ -132,16 +132,32 @@ class SourceRCON {
      */
     write (type, id, body) {
         return new Promise((resolve, reject) => {
+            let response = '';
             const onData = packet => {
                 const decodedPacket = Packet.decode(packet, this.encoding);
 
                 // Because server will response twice(0x00 and 0x02) if we send authenticate packet(0x03)
                 // but we need 0x02 for confirm
-                if (type === Protocol.SERVERDATA_AUTH && decodedPacket.type !== Protocol.SERVERDATA_AUTH_RESPONSE) 
+                if (type === Protocol.SERVERDATA_AUTH && decodedPacket.type !== Protocol.SERVERDATA_AUTH_RESPONSE) {
                     return;
-
+                } else if (type === Protocol.SERVERDATA_AUTH && decodedPacket.type === Protocol.SERVERDATA_AUTH_RESPONSE) {
+                    if (decodedPacket.id === Protocol.ID_AUTH) { // Request ID !== -1 mean success!
+                        resolve('success');
+                    } else {
+                        resolve('failed');
+                    }
+                    this.connection.removeListener('data', onData); // GC
+                } else if(id == decodedPacket.id) {;
+                    response = response.concat(decodedPacket.body.replace(/\n$/, '\n')); // Last new line must be gooone 
+                    // since response can have multiple packets, we have to keep listening until
+                    // the original reaquest is present at the end of the response. This makes sure
+                    // all data has been received.
+                    if(response.includes(`command "${body}"`)) {
+                        this.connection.removeListener('data', onData); // GC
+                        resolve(response); // Let's return our decoded packet data!
+                    }
+                }
                 this.connection.removeListener('error', onError); // GC
-                resolve(decodedPacket); // Let's return our decoded packet data!
             }
 
             const onError = e => {
@@ -150,7 +166,6 @@ class SourceRCON {
             }
 
             const encodedPacket = Packet.encode(type, id, body, this.encoding);
-
             // Check packet size with option.maximumPacketSize
             if (this.maximumPacketSize > 0 && encodedPacket.length > this.maximumPacketSize)
                 reject(Error('Packet too long'));
@@ -168,14 +183,15 @@ class SourceRCON {
      */
     execute (command) {
         return new Promise((resolve, reject) => {
+            let packetID = Math.floor(Math.random() * (256 - 1) + 1);
             if (!this.connection.writable)
                 reject(Error('Unable to write to socket'));
 
             if (!this.authenticated)
                 reject(Error('Unable to authenticate'));
 
-            this.write(Protocol.SERVERDATA_EXECCOMMAND, Protocol.ID_REQUEST, command, this.encoding)
-                .then(data => resolve(data.body.replace(/\n$/, ''))) // Last new line must be gooone 
+            this.write(Protocol.SERVERDATA_EXECCOMMAND, packetID, command, this.encoding)
+                .then(data => resolve(data))
                 .catch(reject);
         });
     }
