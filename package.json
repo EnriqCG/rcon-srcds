@@ -1,21 +1,34 @@
 {
   "name": "rcon-srcds",
-  "version": "1.1.0",
-  "description": "A modern NodeJS library for the Source RCON Protocol",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "A modern and dependency-free Typescript library for the Source RCON Protocol",
+  "main": "dist/rcon.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/EnriqCG/rcon-srcds.git"
   },
   "keywords": [
     "rcon",
+    "client",
     "rcon protocol",
-    "rcon-client",
     "csgo",
-    "minecraft rcon"
+    "source",
+    "minecraft",
+    "typescript",
+    "promise",
+    "async"
   ],
   "author": "Enrique Carpintero <coding@enriqcg.io>",
   "contributors": [
@@ -25,5 +38,12 @@
   "bugs": {
     "url": "https://github.com/EnriqCG/rcon-srcds/issues"
   },
-  "homepage": "https://github.com/EnriqCG/rcon-srcds#readme"
+  "homepage": "https://github.com/EnriqCG/rcon-srcds",
+  "devDependencies": {
+    "@types/node": "^13.13.4",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "eslint": "^6.8.0",
+    "typescript": "^3.8.3"
+  }
 }
