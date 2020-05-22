@@ -1,6 +1,7 @@
 const { createConnection } = require('net');
 const Packet = require('./packet');
 const Protocol = require('./protocol');
+const queue = require('queue');
 
 /**
  * @typedef {Object} ClassOptions 
@@ -72,6 +73,13 @@ class SourceRCON {
          * @private
          */
         this.authenticated = false;
+
+        /**
+         * Queue to sequence the requests to server
+         * @type {Object}
+         * @private
+         */
+        this.q = new queue({ "autostart": true, "timeout": 500, "concurrency": 1 });
     }
 
     /**
@@ -190,9 +198,12 @@ class SourceRCON {
             if (!this.authenticated)
                 reject(Error('Unable to authenticate'));
 
-            this.write(Protocol.SERVERDATA_EXECCOMMAND, packetID, command, this.encoding)
-                .then(data => resolve(data))
-                .catch(reject);
+            // Enqueue requests, else answers may get lost.
+            this.q.push(() => {
+                this.write(Protocol.SERVERDATA_EXECCOMMAND, packetID, command, this.encoding)
+                    .then(data => resolve(data))
+                    .catch(reject);
+            });
         });
     }
 }
