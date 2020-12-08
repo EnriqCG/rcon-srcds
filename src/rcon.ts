@@ -31,7 +31,7 @@ class RCON {
      * Authenticates the connection
      * @param password Password string
      */
-    async authenticate(password: string): Promise<boolean | void> {
+    async authenticate(password: string): Promise<void> {
 
         if (!this.connected) {
             await this.connect()
