@@ -31,7 +31,7 @@ class RCON {
      * Authenticates the connection
      * @param password Password string
      */
-    async authenticate(password: string): Promise<void> {
+    async authenticate(password: string): Promise<boolean> {
 
         if (!this.connected) {
             await this.connect()
@@ -47,7 +47,7 @@ class RCON {
                 .then((data) => {
                     if (data === true) {
                         this.authenticated =  true
-                        resolve()
+                        resolve(true)
                     } else {
                         this.disconnect()
                         reject(Error('Unable to authenticate'))
