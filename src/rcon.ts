@@ -31,7 +31,7 @@ class RCON {
      * Authenticates the connection
      * @param password Password string
      */
-    async authenticate(password: string): Promise<boolean> {
+    async authenticate(password: string): Promise<boolean | void> {
 
         if (!this.connected) {
             await this.connect()
@@ -163,7 +163,10 @@ class RCON {
                     this.connection.removeListener('data', onData)
                 } else if (id === decodedPacket.id) {
                     response = response.concat(decodedPacket.body.replace(/\n$/, '\n')) // remove last line break
-                    if (response.includes(`command "${body}"`)) {
+
+                    // Check the response if it's defined rather than if it contains 'command ${body}'
+                    // Reason for this is because we no longer need to check if it starts with 'command', testing shows it never will
+                    if (response) {
                         this.connection.removeListener('data', onData)
                         resolve(response)
                     }
