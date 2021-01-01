@@ -1,7 +1,7 @@
 {
   "name": "rcon-srcds",
   "version": "2.0.0",
-  "description": "A modern and dependency-free Typescript library for the RCON Protocol",
+  "description": "A modern NodeJS library for the Source RCON Protocol",
   "main": "dist/rcon.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
