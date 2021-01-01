@@ -47,7 +47,7 @@ class RCON {
                 .then((data) => {
                     if (data === true) {
                         this.authenticated =  true
-                        resolve()
+                        resolve(true)
                     } else {
                         this.disconnect()
                         reject(Error('Unable to authenticate'))
@@ -163,7 +163,10 @@ class RCON {
                     this.connection.removeListener('data', onData)
                 } else if (id === decodedPacket.id) {
                     response = response.concat(decodedPacket.body.replace(/\n$/, '\n')) // remove last line break
-                    if (response.includes(`command "${body}"`)) {
+
+                    // Check the response if it's defined rather than if it contains 'command ${body}'
+                    // Reason for this is because we no longer need to check if it starts with 'command', testing shows it never will
+                    if (response) {
                         this.connection.removeListener('data', onData)
                         resolve(response)
                     }
