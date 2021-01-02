@@ -202,4 +202,4 @@ interface RCONOptions {
     timeout?: number
 }
 
-export = RCON
+export default RCON
