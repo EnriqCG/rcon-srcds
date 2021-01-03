@@ -7,17 +7,20 @@ npm install rcon-srcds --save
 ```
 
 ## Usage
-```javascript
+```typescript
+// ES5 import
 const server = new Rcon(options);
+
+// ES5+ import
+import Rcon from 'rcon-srcds';
 ```
 
 ### Options
 These are the default values.
-```javascript
+```typescript
 {
     host: '127.0.0.1',          // Host
     port: 27015,                // Port
-
     maximumPacketSize: 0,       // Maximum packet bytes (0 = no limit)
     encoding: 'ascii',          // Packet encoding (ascii, utf8)
     timeout: 1000               // in ms
@@ -31,8 +34,8 @@ Although the package name implies exclusive compatibility with Source games, Min
 
 ## Examples
 Using async/await:
-```javascript
-const Rcon = require('rcon-srcds');
+```typescript
+import Rcon from 'rcon-srcds';
 const server = new Rcon({ host: '127.0.0.1', port: 25010 });
 try {
     await server.authenticate('your_rcon_password');
@@ -44,8 +47,8 @@ try {
 }
 ```
 Using (native) promises:
-```javascript
-const Rcon = require('rcon-srcds');
+```typescript
+import Rcon from 'rcon-srcds';
 const server = new Rcon({ port: 25010 });
 
 server.authenticate('rcon_password')
