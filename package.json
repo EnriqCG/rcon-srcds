@@ -1,6 +1,6 @@
 {
   "name": "rcon-srcds",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A modern NodeJS library for the Source RCON Protocol",
   "main": "dist/rcon.js",
   "scripts": {
