@@ -161,14 +161,20 @@ class RCON {
                     }
 
                     this.connection.removeListener('data', onData)
-                } else if (id === decodedPacket.id) {
-                    response = response.concat(decodedPacket.body.replace(/\n$/, '\n')) // remove last line break
+                } else if (id === decodedPacket.id || decodedPacket.id === protocol.ID_TERM) {
+                    // don't add the termination packet.
+                    if (decodedPacket.id != protocol.ID_TERM) {
+                        response = response.concat(decodedPacket.body.replace(/\n$/, '\n')) // remove last line break
+                    }
 
-                    // Check the response if it's defined rather than if it contains 'command ${body}'
-                    // Reason for this is because we no longer need to check if it starts with 'command', testing shows it never will
-                    if (response) {
-                        this.connection.removeListener('data', onData)
-                        resolve(response)
+                    // Hack to cope with multipacket responses.
+                    // see https://developer.valvesoftware.com/wiki/Talk:Source_RCON_Protocol#How_to_receive_split_response?
+                    if (decodedPacket.size > 3700) {
+                        let encodedTerminationPacket = packets.encode(protocol.SERVERDATA_RESPONSE_VALUE, protocol.ID_TERM, '');
+                        this.connection.write(encodedTerminationPacket);
+                    } else if (decodedPacket.size <= 3700) { // no need to check for ID_TERM here, since this packet will always be < 3700
+                        this.connection.removeListener('data', onData);
+                        resolve(response);
                     }
                 }
 
