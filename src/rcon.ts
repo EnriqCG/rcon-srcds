@@ -170,7 +170,7 @@ class RCON {
                     // Hack to cope with multipacket responses.
                     // see https://developer.valvesoftware.com/wiki/Talk:Source_RCON_Protocol#How_to_receive_split_response?
                     if (decodedPacket.size > 3700) {
-                        let encodedTerminationPacket = packets.encode(protocol.SERVERDATA_RESPONSE_VALUE, protocol.ID_TERM, '');
+                        const encodedTerminationPacket = packets.encode(protocol.SERVERDATA_RESPONSE_VALUE, protocol.ID_TERM, '');
                         this.connection.write(encodedTerminationPacket);
                     } else if (decodedPacket.size <= 3700) { // no need to check for ID_TERM here, since this packet will always be < 3700
                         this.connection.removeListener('data', onData);
