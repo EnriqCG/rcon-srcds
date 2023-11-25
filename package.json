@@ -5,7 +5,7 @@
   "main": "dist/rcon.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint src/ --ext .ts",
     "build": "tsc",
     "prepare": "npm run build",
     "prepublishOnly": "npm run lint",
