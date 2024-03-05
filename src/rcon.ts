@@ -1,8 +1,8 @@
 import { createConnection, Socket } from 'net'
-import protocol from './protocol'
-import * as packets from './packet'
+import { protocol } from './protocol.js'
+import * as packets from './packet.js'
 
-class RCON {
+export class RCON {
     host: string
     port: number
     maxPacketSize: number
@@ -20,7 +20,7 @@ class RCON {
         this.host = options.host || '127.0.0.1'
         this.port = options.port || 27015
         this.maxPacketSize = options.maxPacketSize || 4096
-        this.encoding = options.encoding || 'ascii'
+        this.encoding = options.encoding || 'utf8'
         this.timeout = options.timeout || 1000
 
         this.authenticated = false
@@ -200,12 +200,10 @@ class RCON {
     }
 }
 
-interface RCONOptions {
+export interface RCONOptions {
     host?: string
     port?: number
     maxPacketSize?: number
     encoding?: packets.EncodingOptions
     timeout?: number
 }
-
-export default RCON

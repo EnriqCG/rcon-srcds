@@ -6,7 +6,7 @@
  * @param encoding Body encoding
  * @returns Encoded packet buffer
  */
-export const encode = (type: number, id: number, body: string, encoding: EncodingOptions = 'ascii'): Buffer => {
+export const encode = (type: number, id: number, body: string, encoding: EncodingOptions = 'utf8'): Buffer => {
     const size = Buffer.byteLength(body) + 14 // body size + 10 + 4 (Null)
     const buffer = Buffer.alloc(size)
 
@@ -25,7 +25,7 @@ export const encode = (type: number, id: number, body: string, encoding: Encodin
  * @param encoding Body encoding
  * @returns Decoded packet object
  */
-export const decode = (buf: Buffer, encoding: EncodingOptions = 'ascii'): DecodedPacket => {
+export const decode = (buf: Buffer, encoding: EncodingOptions = 'utf8'): DecodedPacket => {
     return {
         size: buf.readInt32LE(0),
         id: buf.readInt32LE(4),

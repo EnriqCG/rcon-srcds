@@ -1,6 +1,7 @@
 {
+  "type": "module",
   "name": "rcon-srcds",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "A zero-dependency Typescript library for the Source/Minecraft RCON Protocol",
   "main": "dist/rcon.js",
   "scripts": {
@@ -9,8 +10,7 @@
     "build": "tsc",
     "prepare": "npm run build",
     "prepublishOnly": "npm run lint",
-    "preversion": "npm run lint",
-    "version": "npm run format && git add -A src"
+    "preversion": "npm run lint"
   },
   "files": [
     "dist/**/*"
@@ -40,12 +40,16 @@
   "bugs": {
     "url": "https://github.com/EnriqCG/rcon-srcds/issues"
   },
+  "engines" : {
+    "npm" : ">=6.0.0",
+    "node" : ">=14.0.0"
+  },
   "homepage": "https://github.com/EnriqCG/rcon-srcds",
   "devDependencies": {
-    "@types/node": "^13.13.4",
-    "@typescript-eslint/eslint-plugin": "^2.30.0",
-    "@typescript-eslint/parser": "^2.30.0",
-    "eslint": "^6.8.0",
-    "typescript": "^3.8.3"
+    "@types/node": "^14.18.63",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3"
   }
 }
