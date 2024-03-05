@@ -16,3 +16,4 @@ const protocol = Object.freeze({
 })
 
 export default protocol
+module.exports = protocol
