@@ -209,3 +209,4 @@ interface RCONOptions {
 }
 
 export default RCON
+module.exports = RCON
