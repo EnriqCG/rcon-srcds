@@ -4,7 +4,7 @@
  *
  * @readonly
  */
-const protocol = Object.freeze({
+export const protocol = Object.freeze({
     SERVERDATA_AUTH: 0x03,              // First packet for authentication
     SERVERDATA_EXECCOMMAND: 0x02,       // Command issued to the server
     SERVERDATA_AUTH_RESPONSE: 0x02,     // Response of SERVERDATA_AUTH, body === -1 means failed
@@ -14,5 +14,3 @@ const protocol = Object.freeze({
     ID_REQUEST: 0x123,
     ID_TERM:0x777
 })
-
-export default protocol
