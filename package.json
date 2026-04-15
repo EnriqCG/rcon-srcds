@@ -5,7 +5,7 @@
   "main": "dist/rcon.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src/ --ext .ts",
+    "lint": "eslint src/",
     "build": "tsc",
     "prepare": "npm run build",
     "prepublishOnly": "npm run lint",
@@ -42,10 +42,10 @@
   },
   "homepage": "https://github.com/EnriqCG/rcon-srcds",
   "devDependencies": {
-    "@types/node": "^13.13.4",
-    "@typescript-eslint/eslint-plugin": "^2.30.0",
-    "@typescript-eslint/parser": "^2.30.0",
-    "eslint": "^6.8.0",
-    "typescript": "^3.8.3"
+    "@eslint/js": "^10.0.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^10.2.0",
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8.0.0"
   }
 }
