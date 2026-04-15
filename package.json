@@ -1,6 +1,6 @@
 {
   "name": "rcon-srcds",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A zero-dependency Typescript library for the Source/Minecraft RCON Protocol",
   "main": "dist/rcon.js",
   "scripts": {
