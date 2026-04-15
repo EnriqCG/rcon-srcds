@@ -9,7 +9,7 @@ npm install rcon-srcds --save
 ## Usage
 ```typescript
 // ES5 import
-const server = new Rcon(options);
+const Rcon = require('rcon-srcds').default
 
 // ES5+ import
 import Rcon from 'rcon-srcds';
