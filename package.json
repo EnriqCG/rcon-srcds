@@ -10,7 +10,7 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm run lint",
     "preversion": "npm run lint",
-    "version": "npm run format && git add -A src"
+    "version": "git add -A src"
   },
   "files": [
     "dist/**/*"
